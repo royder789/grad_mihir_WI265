@@ -1,0 +1,225 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+
+psql (18.1)
+WARNING: Console code page (850) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# CREATE DATABASE layout_maintenance_db;
+CREATE DATABASE
+postgres=# \c layout_maintenance_db;
+You are now connected to database "layout_maintenance_db" as user "postgres".
+layout_maintenance_db=# CREATE TABLE owner (
+layout_maintenance_db(#     owner_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     owner_name VARCHAR(50) NOT NULL,
+layout_maintenance_db(#     phone VARCHAR(15) UNIQUE NOT NULL
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=# CREATE TABLE owner_login (
+layout_maintenance_db(#     owner_id INT PRIMARY KEY,
+layout_maintenance_db(#     password VARCHAR(30) NOT NULL,
+layout_maintenance_db(#     FOREIGN KEY (owner_id)
+layout_maintenance_db(#         REFERENCES owner(owner_id)
+layout_maintenance_db(#         ON DELETE CASCADE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=# CREATE TABLE site (
+layout_maintenance_db(#     site_id INT PRIMARY KEY,
+layout_maintenance_db(#     site_type VARCHAR(30),
+layout_maintenance_db(#     length INT,
+layout_maintenance_db(#     width INT,
+layout_maintenance_db(#     is_open BOOLEAN,
+layout_maintenance_db(#     is_occupied BOOLEAN,
+layout_maintenance_db(#     maintenance DOUBLE PRECISION,
+layout_maintenance_db(#     owner_id INT,
+layout_maintenance_db(#     FOREIGN KEY (owner_id)
+layout_maintenance_db(#         REFERENCES owner(owner_id)
+layout_maintenance_db(#         ON DELETE SET NULL
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=# CREATE TABLE site_update_request (
+layout_maintenance_db(#     request_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     site_id INT NOT NULL,
+layout_maintenance_db(#     owner_id INT NOT NULL,
+layout_maintenance_db(#     request_type VARCHAR(50),
+layout_maintenance_db(#     approved BOOLEAN DEFAULT FALSE,
+layout_maintenance_db(#     FOREIGN KEY (site_id)
+layout_maintenance_db(#         REFERENCES site(site_id)
+layout_maintenance_db(#         ON DELETE CASCADE,
+layout_maintenance_db(#     FOREIGN KEY (owner_id)
+layout_maintenance_db(#         REFERENCES owner(owner_id)
+layout_maintenance_db(#         ON DELETE CASCADE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=# INSERT INTO site
+layout_maintenance_db-# (site_id, site_type, length, width, is_open, is_occupied, maintenance)
+layout_maintenance_db-# SELECT
+layout_maintenance_db-#     i,
+layout_maintenance_db-#     'OPEN_SITE',
+layout_maintenance_db-#     40,
+layout_maintenance_db-#     60,
+layout_maintenance_db-#     true,
+layout_maintenance_db-#     false,
+layout_maintenance_db-#     40*60*6
+layout_maintenance_db-# FROM generate_series(1,10) AS i;
+INSERT 0 10
+layout_maintenance_db=# INSERT INTO site
+layout_maintenance_db-# (site_id, site_type, length, width, is_open, is_occupied, maintenance)
+layout_maintenance_db-# SELECT
+layout_maintenance_db-#     i,
+layout_maintenance_db-#     'OPEN_SITE',
+layout_maintenance_db-#     30,
+layout_maintenance_db-#     50,
+layout_maintenance_db-#     true,
+layout_maintenance_db-#     false,
+layout_maintenance_db-#     30*50*6
+layout_maintenance_db-# FROM generate_series(11,20) AS i;
+INSERT 0 10
+layout_maintenance_db=# INSERT INTO site
+layout_maintenance_db-# (site_id, site_type, length, width, is_open, is_occupied, maintenance)
+layout_maintenance_db-# SELECT
+layout_maintenance_db-#     i,
+layout_maintenance_db-#     'OPEN_SITE',
+layout_maintenance_db-#     30,
+layout_maintenance_db-#     40,
+layout_maintenance_db-#     true,
+layout_maintenance_db-#     false,
+layout_maintenance_db-#     30*40*6
+layout_maintenance_db-# FROM generate_series(21,35) AS i;
+INSERT 0 15
+layout_maintenance_db=# -- ================= DROP TABLES (SAFE ORDER) =================
+layout_maintenance_db=# DROP TABLE IF EXISTS password_table;
+NOTICE:  table "password_table" does not exist, skipping
+DROP TABLE
+layout_maintenance_db=# DROP TABLE IF EXISTS request_table;
+NOTICE:  table "request_table" does not exist, skipping
+DROP TABLE
+layout_maintenance_db=# DROP TABLE IF EXISTS owner_table;
+NOTICE:  table "owner_table" does not exist, skipping
+DROP TABLE
+layout_maintenance_db=# DROP TABLE IF EXISTS site_table;
+NOTICE:  table "site_table" does not exist, skipping
+DROP TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= SITE TABLE =================
+layout_maintenance_db=# CREATE TABLE site_table (
+layout_maintenance_db(#     site_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     type VARCHAR(20),
+layout_maintenance_db(#     size_sqft INT,
+layout_maintenance_db(#     maintenance_charges INT,
+layout_maintenance_db(#     occupied BOOLEAN DEFAULT FALSE,
+layout_maintenance_db(#     booked BOOLEAN DEFAULT FALSE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= OWNER TABLE =================
+layout_maintenance_db=# CREATE TABLE owner_table (
+layout_maintenance_db(#     owner_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     site_id INT REFERENCES site_table(site_id) ON DELETE SET NULL,
+layout_maintenance_db(#     owner_name VARCHAR(100),
+layout_maintenance_db(#     owner_phone VARCHAR(15),
+layout_maintenance_db(#     maintenance_paid BOOLEAN DEFAULT FALSE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= REQUEST TABLE =================
+layout_maintenance_db=# CREATE TABLE request_table (
+layout_maintenance_db(#     request_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     owner_id INT REFERENCES owner_table(owner_id) ON DELETE CASCADE,
+layout_maintenance_db(#     new_name VARCHAR(100),
+layout_maintenance_db(#     new_phone VARCHAR(15)
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= PASSWORD TABLE =================
+layout_maintenance_db=# CREATE TABLE password_table (
+layout_maintenance_db(#     username VARCHAR(50) PRIMARY KEY,
+layout_maintenance_db(#     pass VARCHAR(50),
+layout_maintenance_db(#     owner_id INT REFERENCES owner_table(owner_id) ON DELETE CASCADE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= INSERT ADMIN CREDENTIAL =================
+layout_maintenance_db=# INSERT INTO password_table (username, pass, owner_id)
+layout_maintenance_db-# VALUES ('admin', 'root', NULL);
+INSERT 0 1
+layout_maintenance_db=# -- ================= DROP TABLES (SAFE ORDER) =================
+layout_maintenance_db=# DROP TABLE IF EXISTS password_table;
+DROP TABLE
+layout_maintenance_db=# DROP TABLE IF EXISTS request_table;
+DROP TABLE
+layout_maintenance_db=# DROP TABLE IF EXISTS owner_table;
+DROP TABLE
+layout_maintenance_db=# DROP TABLE IF EXISTS site_table;
+DROP TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= SITE TABLE =================
+layout_maintenance_db=# CREATE TABLE site_table (
+layout_maintenance_db(#     site_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     type VARCHAR(20),
+layout_maintenance_db(#     size_sqft INT,
+layout_maintenance_db(#     maintenance_charges INT,
+layout_maintenance_db(#     occupied BOOLEAN DEFAULT FALSE,
+layout_maintenance_db(#     booked BOOLEAN DEFAULT FALSE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= OWNER TABLE =================
+layout_maintenance_db=# CREATE TABLE owner_table (
+layout_maintenance_db(#     owner_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     site_id INT REFERENCES site_table(site_id) ON DELETE SET NULL,
+layout_maintenance_db(#     owner_name VARCHAR(100),
+layout_maintenance_db(#     owner_phone VARCHAR(15),
+layout_maintenance_db(#     maintenance_paid BOOLEAN DEFAULT FALSE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= REQUEST TABLE =================
+layout_maintenance_db=# CREATE TABLE request_table (
+layout_maintenance_db(#     request_id SERIAL PRIMARY KEY,
+layout_maintenance_db(#     owner_id INT REFERENCES owner_table(owner_id) ON DELETE CASCADE,
+layout_maintenance_db(#     new_name VARCHAR(100),
+layout_maintenance_db(#     new_phone VARCHAR(15)
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= PASSWORD TABLE =================
+layout_maintenance_db=# CREATE TABLE password_table (
+layout_maintenance_db(#     username VARCHAR(50) PRIMARY KEY,
+layout_maintenance_db(#     pass VARCHAR(50),
+layout_maintenance_db(#     owner_id INT REFERENCES owner_table(owner_id) ON DELETE CASCADE
+layout_maintenance_db(# );
+CREATE TABLE
+layout_maintenance_db=#
+layout_maintenance_db=# -- ================= INSERT ADMIN CREDENTIAL =================
+layout_maintenance_db=# INSERT INTO password_table (username, pass, owner_id)
+layout_maintenance_db-# VALUES ('admin', 'root', NULL);
+INSERT 0 1
+layout_maintenance_db=# DROP TABLE IF EXISTS password_table;
+DROP TABLE
+layout_maintenance_db=# DROP TABLE IF EXISTS request_table;
+DROP TABLE
+layout_maintenance_db=#  DROP TABLE IF EXISTS owner_table;
+DROP TABLE
+layout_maintenance_db=#  DROP TABLE IF EXISTS owner_table;
+NOTICE:  table "owner_table" does not exist, skipping
+DROP TABLE
+layout_maintenance_db=#  DROP TABLE IF EXISTS site_table;
+DROP TABLE
+layout_maintenance_db=# CREATE TABLE site_table (site_id INT PRIMARY KEY, type VARCHAR(50), size_sqft INT, maintenance_charges INT, occupied BOOLEAN, booked BOOLEAN DEFAULT FALSE);
+CREATE TABLE
+layout_maintenance_db=# CREATE TABLE owner_table (owner_id INT PRIMARY KEY, site_id INT REFERENCES site_table(site_id), owner_name VARCHAR(100), owner_phone VARCHAR(20), maintenance_paid BOOLEAN DEFAULT FALSE);
+CREATE TABLE
+layout_maintenance_db=# CREATE TABLE request_table (request_id SERIAL PRIMARY KEY, owner_id INT, new_name VARCHAR(100), new_phone VARCHAR(20));
+CREATE TABLE
+layout_maintenance_db=# CREATE TABLE password_table (username VARCHAR(50) PRIMARY KEY, pass VARCHAR(50), owner_id INT REFERENCES owner_table(owner_id));
+CREATE TABLE
+layout_maintenance_db=# -- Add Admin
+layout_maintenance_db=# INSERT INTO password_table (username, pass, owner_id) VALUES ('admin', 'admin123', NULL);
+INSERT 0 1
+layout_maintenance_db=#
