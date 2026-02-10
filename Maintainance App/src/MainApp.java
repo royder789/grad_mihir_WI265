@@ -288,7 +288,7 @@ class ServiceImplementation implements MaintenanceService {
 }
 
 // --- MAIN APPLICATION ---
-public class MaintenanceApp {
+public class MainApp {
     static Scanner input = new Scanner(System.in);
     static MaintenanceService service = new ServiceImplementation();
 
@@ -394,3 +394,4 @@ public class MaintenanceApp {
         }
     }
 }
+
