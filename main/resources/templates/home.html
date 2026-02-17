@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student</title>
+</head>
+<body>
+    <h2>StudentPage</h2>
+    <form th:action="@{/add}" th:object="${student}" method="post">
+        <table>
+            <tr><td>Roll No:</td><td><input type="number" th:field="*{rollNo}" required/></td></tr>
+            <tr><td>Name:</td><td><input type="text" th:field="*{name}" required/></td></tr>
+            <tr><td>Standard:</td><td><input type="text" th:field="*{standard}" required/></td></tr>
+            <tr><td>School Name:</td><td><input type="text" th:field="*{schoolName}" required/></td></tr>
+            <tr>
+                <td><button type="submit">INSERT</button></td>
+                <td><button type="reset">RESET</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <div th:if="${param.success}">
+        <p style="color: green;">Record saved to H2 Database successfully!</p>
+    </div>
+</body>
+</html>
