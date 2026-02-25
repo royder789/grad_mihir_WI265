@@ -5,7 +5,7 @@ public class CalculatorMain {
         Calculator calc = new Calculator();
 
         int result1 = calc.add(11, 5);
-        int result2 = calc.subtract(10, 5);
+        int result2 = calc.subtract(9, 5);
         int result3 = calc.multiply(10, 5);
         int result4 = calc.divide(10, 5);
 
