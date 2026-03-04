@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUR BANK - Banking at your Doorstep</title>
+    <link rel="stylesheet" href="style.css">  <!-- Keep your existing style.css -->
+
+    <!-- Additional styles for sidebar + deposit form -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f4f4;
+        }
+
+        /* Fixed Left Sidebar */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to bottom, #ff69b4, #ff1493); /* Pink theme as in your sketch */
+            color: white;
+            padding-top: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        .sidebar .logo {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        .sidebar a {
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .sidebar a.active {
+            background: rgba(255,255,255,0.3);
+            border-left: 5px solid #ffd700;
+        }
+
+        /* Main content shifted right */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        section {
+            background: white;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: #004b8d;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: #ffd700;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Responsive: Collapse sidebar on small screens */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            /* You can add a hamburger menu button here if you want full mobile support */
+        }
+
+        .deposit-form, .account-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Left Sidebar Navigation -->
+<div class="sidebar">
+    <div class="logo">OUR BANK</div>
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#services">SERVICES</a>
+    <a href="#accounts">OPEN ACCOUNT</a>
+    <a href="#deposit">DEPOSIT</a>
+    <a href="netbanking.html">NETBANKING</a>
+    <a href="contact.html">CONTACT</a>
+</div>
+
+<!-- Main Content Area -->
+<div class="main-content">
+
+    <section id="home" class="hero" style="background: linear-gradient(rgba(0,75,141,0.7), rgba(0,102,204,0.7)), url('https://images.unsplash.com/photo-1556740714-a8395b3a74dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); background-size: cover; color:white; text-align:center; padding:8rem 2rem; border-radius:12px;">
+        <h1 style="font-size:3.5rem; margin-bottom:1rem;">Welcome to OUR BANK</h1>
+        <p style="font-size:1.4rem; max-width:700px; margin:0 auto 2rem;">Banking at your Doorstep – Secure, Simple, and Always Available</p>
+        <a href="netbanking.html" class="btn" style="background:#ffd700; color:#004b8d; padding:1rem 2.5rem; border-radius:50px; text-decoration:none; font-weight:bold;">Login to Netbanking</a>
+    </section>
+
+    <section>
+        <h2>Why Choose Us?</h2>
+        <p style="text-align:center; max-width:800px; margin:0 auto;">Trusted, fast, customer-first banking with top security & 24/7 support.</p>
+    </section>
+
+    <section id="about">
+        <h2>About OUR BANK</h2>
+        <p>We are a customer-centric bank committed to secure, innovative banking since 2005.</p>
+        <ul style="margin:2rem 0; padding-left:2.5rem; max-width:700px; margin-left:auto; margin-right:auto;">
+            <li>24/7 Digital Banking</li>
+            <li>Quick Loan Approvals</li>
+            <li>Best-in-class Security</li>
+            <li>Doorstep Services in Mangaluru & surrounding areas</li>
+        </ul>
+    </section>
+
+    <section id="services">
+        <h2>Our Banking Services</h2>
+        <div class="services-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:2rem;">
+            <div class="service-card" style="background:#f8f9fa; padding:2rem; border-radius:10px; text-align:center; border:1px solid #e0e0e0;">
+                <h3>Savings & Current Account</h3>
+                <p>Open instantly – zero balance option</p>
+                <a href="#accounts" style="color:#0066cc; font-weight:bold;">Open Account →</a>
+            </div>
+            
+            <div class="service-card">
+                <h3>Loans</h3>
+                <p>Home, Car, Personal – Quick approval</p>
+                <a href="loan.html" style="color:#0066cc; font-weight:bold;">Check EMI →</a>
+            </div>
+            <div class="service-card">
+                <h3>Deposit Funds</h3>
+                <p>Add money to your account easily</p>
+                <a href="#deposit" style="color:#0066cc; font-weight:bold;">Deposit Now →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="accounts">
+        <h2>Open Savings or Current Account</h2>
+        <div class="account-form">
+            <form>
+                <label>Full Name</label><input type="text" required>
+                <label>Mobile Number</label><input type="tel" pattern="[0-9]{10}" required>
+                <label>Email</label><input type="email" required>
+                <label>Account Type</label>
+                <select required>
+                    <option value="">Select</option>
+                    <option>Savings (Zero Balance)</option>
+                    <option>Current (Business)</option>
+                </select>
+                <button type="button" onclick="alert('Account request submitted! Our team will contact you soon.')">Submit Request</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- New: Deposit Functionality -->
+    <section id="deposit">
+        <h2>Deposit to Your Account</h2>
+        <p style="text-align:center; max-width:700px; margin:0 auto 2rem;">Add funds securely to your Savings or Current account.</p>
+        <div class="deposit-form">
+            <form>
+                <label>Account Holder Name</label>
+                <input type="text" placeholder="Your full name" required>
+
+                <label>Account Number (or Customer ID)</label>
+                <input type="text" placeholder="XXXXXXXXXXXX" required>
+
+                <label>Account Type</label>
+                <select required>
+                    <option value="">Select Account</option>
+                    <option>Savings Account</option>
+                    <option>Current Account</option>
+                </select>
+
+                <label>Deposit Amount (₹)</label>
+                <input type="number" min="100" placeholder="Minimum ₹100" required>
+
+                <label>Payment Mode</label>
+                <select required>
+                    <option value="">Select Mode</option>
+                    <option>Cash at Branch / Doorstep</option>
+                    <option>UPI / Netbanking</option>
+                    <option>Cheque / DD</option>
+                </select>
+
+                <button type="button" onclick="handleDeposit()">Make Deposit</button>
+            </form>
+        </div>
+    </section>
+
+</div>
+
+<script>
+// Active link highlighting on scroll
+const sections = document.querySelectorAll('section[id]');
+const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 200;
+        if (scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// Fake deposit function
+function handleDeposit() {
+    alert('Deposit request processed! ₹ will reflect in your account shortly.\nThank you for banking with OUR BANK.');
+}
+</script>
+
+</body>
+</html>
