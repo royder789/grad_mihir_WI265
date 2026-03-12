@@ -1,0 +1,19 @@
+<h2>Students</h2>
+
+<table border="1">
+
+<tr>
+<th>RegNo</th>
+<th>Name</th>
+<th>School</th>
+<th>Percentage</th>
+</tr>
+
+<tr *ngFor="let s of students">
+<td>{{s.regNo}}</td>
+<td>{{s.name}}</td>
+<td>{{s.school}}</td>
+<td>{{s.percentage}}</td>
+</tr>
+
+</table>

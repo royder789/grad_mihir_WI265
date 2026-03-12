@@ -1,0 +1,28 @@
+<h2>Add Student</h2>
+
+<form (ngSubmit)="addStudent()">
+
+Reg No
+<input type="number" [(ngModel)]="student.regNo" name="regNo"><br>
+
+Roll No
+<input type="number" [(ngModel)]="student.rollNo" name="rollNo"><br>
+
+Name
+<input type="text" [(ngModel)]="student.name" name="name"><br>
+
+Standard
+<input type="number" [(ngModel)]="student.standard" name="standard"><br>
+
+School
+<input type="text" [(ngModel)]="student.school" name="school"><br>
+
+Gender
+<input type="text" [(ngModel)]="student.gender" name="gender"><br>
+
+Percentage
+<input type="number" [(ngModel)]="student.percentage" name="percentage"><br>
+
+<button type="submit">Add Student</button>
+
+</form>
